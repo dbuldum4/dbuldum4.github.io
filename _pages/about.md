@@ -2,11 +2,11 @@
 layout: about
 title: about
 permalink: /
-subtitle: \"Simplicity is the highest goal, achievable when you have overcome all difficulties\" - Frédéric Chopin
+subtitle: Research is to see what everyone else has seen, and to think what nobody else has thought - Albert Szent-Györgyi
 
 
 
-news: true # includes a list of news items
+news: false # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
