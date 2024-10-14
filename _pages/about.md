@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: "Simplicity is the highest goal, achievable when you have overcome all difficulties" - Frédéric Chopin
+subtitle: \"Simplicity is the highest goal, achievable when you have overcome all difficulties\" - Frédéric Chopin
 
 
 
