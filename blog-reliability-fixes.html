@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What small reliability fixes taught me about software | Deniz Buldum</title>
+    <meta
+      name="description"
+      content="A short essay on software reliability, measurable improvements, and operational detail work."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="article-page">
+    <header class="taskbar">
+      <div class="taskbar-inner">
+        <a class="brand" href="index.html">Deniz Buldum</a>
+        <nav class="taskbar-nav" aria-label="Primary">
+          <a href="index.html#about">About</a>
+          <a href="index.html#experience">Experience</a>
+          <a href="index.html#projects">Projects</a>
+          <a class="is-active" href="blog.html">Blog</a>
+          <a href="https://github.com/dbuldum4" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="article-shell">
+      <article class="article reveal">
+        <p class="article-crumb">
+          <a class="inline-link" href="blog.html">Back to archive</a>
+        </p>
+        <p class="article-kicker">April 2026 · Reliability</p>
+        <h1>What small reliability fixes taught me about software</h1>
+        <p class="article-lead">
+          The most useful engineering work I have done recently was not flashy.
+          It came from improving a system people already depended on and making
+          it easier to trust.
+        </p>
+
+        <p>
+          That changed the way I think about software. It is easy to treat
+          engineering as a sequence of features. It is harder, and usually more
+          important, to treat it as a sequence of decisions that reduce
+          confusion, remove failure points, and make the system easier to trust.
+        </p>
+
+        <h2>Real work starts when the data gets messy</h2>
+        <p>
+          Clean demos hide the part that matters. In practice, software has
+          missing values, duplicate records, inconsistent naming, and processes
+          built around human workarounds. Once you see that up close, you stop
+          thinking of reliability as a background concern. It becomes the work.
+        </p>
+        <p>
+          What I liked most about that kind of environment was the feedback
+          loop. You make a fix, validate the data, talk to the people using the
+          system, and then check whether the outcome actually improved. The loop
+          is slower than a local demo, but it is more honest.
+        </p>
+
+        <h2>Measurement sharpens judgment</h2>
+        <p>
+          I have become much more skeptical of vague claims about improvement.
+          If a process is better, there should usually be a way to show it.
+          Sometimes that means a dashboard. Sometimes it means a smaller error
+          count, a shorter onboarding flow, or fewer avoidable decisions for the
+          user.
+        </p>
+        <p>
+          That mindset also changes how I evaluate product design. A clean
+          interface is not only about aesthetics. It is about reducing
+          hesitation. It is about making the next step obvious enough that the
+          user does not need to think about the interface itself.
+        </p>
+
+        <h2>Small fixes are not small when they compound</h2>
+        <p>
+          Some of the most valuable work in software comes from tasks that are
+          easy to underestimate: cleaning source data, adjusting copy, fixing an
+          awkward flow, standardizing naming, or making a page faster to scan.
+          None of those changes look dramatic in isolation. Together, they
+          change whether a system feels dependable.
+        </p>
+        <p>
+          I think student builders sometimes skip this stage because new ideas
+          are more exciting than maintenance. I understand that. But the gap
+          between a promising project and a useful one is usually filled with
+          this kind of detail work.
+        </p>
+
+        <h2>The standard I want to keep</h2>
+        <p>
+          Going forward, I want my projects to reflect a simple standard: make
+          the system clearer, make it more usable, and be able to explain what
+          improved. That applies whether I am working on a terminal tool, a web
+          app, an onboarding flow, or a data pipeline.
+        </p>
+        <p>
+          Good software does not need to be loud. It needs to be legible,
+          reliable, and worth returning to. That is the kind of work I want to
+          keep doing.
+        </p>
+
+        <p class="article-back">
+          <a class="inline-link" href="blog.html">Browse more writing</a>
+        </p>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <p>Deniz Buldum</p>
+      <div>
+        <a href="mailto:denizbuldum27@solonschools.net">
+          denizbuldum27@solonschools.net
+        </a>
+        <a href="https://github.com/dbuldum4" target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
