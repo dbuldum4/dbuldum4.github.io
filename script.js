@@ -14,7 +14,22 @@ if (sectionLinks.length > 0) {
 
   const getScrollOffset = () => {
     const taskbar = document.querySelector(".taskbar");
-    return (taskbar?.offsetHeight || 0) + 28;
+    return (taskbar?.offsetHeight || 0) + 10;
+  };
+
+  const getSectionAnchor = (section) => {
+    return section.querySelector(".section-heading") || section;
+  };
+
+  const scrollToSection = (section) => {
+    const anchor = getSectionAnchor(section);
+    const top =
+      window.scrollY + anchor.getBoundingClientRect().top - getScrollOffset();
+
+    window.scrollTo({
+      top,
+      behavior: "auto",
+    });
   };
 
   const updateActiveSection = () => {
@@ -35,14 +50,20 @@ if (sectionLinks.length > 0) {
   };
 
   sectionLinks.forEach((link) => {
-    link.addEventListener("click", () => {
+    link.addEventListener("click", (event) => {
       const targetId = link.getAttribute("href")?.slice(1);
+      const targetSection = targetId
+        ? document.getElementById(targetId)
+        : null;
 
-      if (!targetId) {
+      if (!targetId || !targetSection) {
         return;
       }
 
+      event.preventDefault();
+      history.replaceState(null, "", `#${targetId}`);
       setActiveLink(targetId);
+      scrollToSection(targetSection);
       window.setTimeout(updateActiveSection, 0);
     });
   });
