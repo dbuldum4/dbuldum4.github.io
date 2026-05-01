@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <title>Deniz Buldum</title>
     <meta
       name="description"
@@ -14,85 +15,111 @@
       href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,700&amp;display=swap"
       rel="stylesheet"
     />
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem("deniz-theme");
+
+          if (theme === "light" || theme === "dark") {
+            document.documentElement.dataset.theme = theme;
+            document.documentElement.style.colorScheme = theme;
+          }
+        } catch {
+          return;
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <header class="taskbar">
-      <div class="taskbar-inner">
+  <body class="home-page">
+    <header class="site-header">
+      <div class="site-header-inner">
         <a class="brand" href="#top">Deniz Buldum</a>
-        <nav class="taskbar-nav" aria-label="Primary">
+        <nav class="site-nav" aria-label="Primary">
           <a href="#about" data-section-link>About</a>
-          <a href="#experience" data-section-link>Experience</a>
+          <a href="#work" data-section-link>Work</a>
           <a href="#projects" data-section-link>Projects</a>
-          <a href="blog.html">Blog</a>
-          <a href="https://github.com/dbuldum4" target="_blank" rel="noreferrer">
-            GitHub
-          </a>
         </nav>
       </div>
     </header>
 
-    <main id="top">
-      <section class="hero" id="about">
-        <div class="hero-grid">
-          <div class="hero-copy reveal">
-            <p class="eyebrow">Software, data, and product work</p>
-            <h1>Deniz A. Buldum</h1>
-            <p class="lede">
-              I build practical software with an emphasis on interface clarity,
-              data quality, and product work grounded in real use.
-            </p>
-            <div class="hero-links">
-              <a class="link-pill" href="#projects">Selected projects</a>
-              <a
-                class="link-pill secondary"
-                href="https://github.com/dbuldum4"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub / dbuldum4
-              </a>
+    <main class="page-shell home-shell" id="top">
+      <section class="page-section intro-section" id="about">
+        <div class="section-label reveal">
+          <p>About</p>
+        </div>
+        <div class="section-body reveal">
+          <h1>Deniz A. Buldum</h1>
+          <p class="intro-copy">
+            I work on student-led web products, small developer tools,
+            onboarding flows, and data-heavy systems where the next action
+            needs to be obvious.
+          </p>
+          <p class="intro-copy">
+            Most of my work sits between engineering and product thinking. I
+            care about whether a tool is understandable, measurable, and useful
+            after the first demo.
+          </p>
+
+          <dl class="intro-details">
+            <div>
+              <dt>Based</dt>
+              <dd>Solon, Ohio</dd>
             </div>
-            <ul class="hero-summary" aria-label="Quick profile">
-              <li>Solon, Ohio</li>
-              <li>Solon High School, Class of 2027</li>
-              <li>Machine learning, UI/UX, data science, math, physics</li>
-            </ul>
-          </div>
+            <div>
+              <dt>School</dt>
+              <dd>Solon High School, Class of 2027</dd>
+            </div>
+            <div>
+              <dt>Interests</dt>
+              <dd>Machine learning, data science, product design, math, physics</dd>
+            </div>
+            <div>
+              <dt>Elsewhere</dt>
+              <dd>
+                <a href="mailto:denizbuldum27@solonschools.net">Email</a>
+                <span aria-hidden="true"> / </span>
+                <a
+                  href="https://github.com/dbuldum4"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub
+                </a>
+              </dd>
+            </div>
+          </dl>
         </div>
       </section>
 
-      <section class="section section-band" id="focus">
-        <div class="section-heading reveal">
-          <h2>Current focus</h2>
+      <section class="page-section" id="work">
+        <div class="section-label reveal">
+          <p>Work</p>
         </div>
-        <div class="focus-grid reveal">
-          <p>
-            I am most interested in machine learning, data-oriented software,
-            product design, and full-stack web development.
-          </p>
-          <p>
-            My recent work has been split between building student-led software,
-            improving product onboarding and QA flows, and working with messy
-            operational data where quality matters.
-          </p>
-        </div>
-      </section>
+        <div class="section-body entry-list">
+          <article class="entry reveal">
+            <div class="entry-meta">
+              <p>September 2024 to Present</p>
+              <span>Solon, Ohio</span>
+            </div>
+            <div class="entry-body">
+              <h2>Tech Lead and Club Officer</h2>
+              <p class="entry-subtitle">Solon Investment Society</p>
+              <p>
+                Built and maintained the club website while handling the
+                technical side of communication, outreach, and operations.
+              </p>
+            </div>
+          </article>
 
-      <section class="section" id="experience">
-        <div class="section-heading reveal">
-          <h2>Experience</h2>
-        </div>
-
-        <div class="timeline">
-          <article class="timeline-item reveal">
-            <div class="timeline-meta">
+          <article class="entry reveal">
+            <div class="entry-meta">
               <p>June 2025 to July 2025</p>
               <span>Cleveland, Ohio</span>
             </div>
-            <div class="timeline-body">
-              <h3>Data Science Intern</h3>
-              <p class="timeline-org">Cleveland Clinic</p>
+            <div class="entry-body">
+              <h2>Data Science Intern</h2>
+              <p class="entry-subtitle">Cleveland Clinic</p>
               <p>
                 Built a Power BI dashboard for loss statistics, worked through
                 data quality issues in WaveMark, and reduced error counts from
@@ -101,14 +128,14 @@
             </div>
           </article>
 
-          <article class="timeline-item reveal">
-            <div class="timeline-meta">
+          <article class="entry reveal">
+            <div class="entry-meta">
               <p>July 2025</p>
               <span>Remote</span>
             </div>
-            <div class="timeline-body">
-              <h3>Python Programming Instructor</h3>
-              <p class="timeline-org">ScioVirtual</p>
+            <div class="entry-body">
+              <h2>Python Programming Instructor</h2>
+              <p class="entry-subtitle">ScioVirtual</p>
               <p>
                 Led the Python Programming course at ScioCamp 2025 for students
                 studying STEM olympiads and technical problem solving.
@@ -116,14 +143,14 @@
             </div>
           </article>
 
-          <article class="timeline-item reveal">
-            <div class="timeline-meta">
+          <article class="entry reveal">
+            <div class="entry-meta">
               <p>June 2024 to August 2024</p>
               <span>Remote / Seattle</span>
             </div>
-            <div class="timeline-body">
-              <h3>UX Intern</h3>
-              <p class="timeline-org">Maximal Learning</p>
+            <div class="entry-body">
+              <h2>UX Intern</h2>
+              <p class="entry-subtitle">Maximal Learning</p>
               <p>
                 Wrote a PRD, redesigned the onboarding flow, researched
                 competing products, and analyzed user behavior to improve
@@ -132,14 +159,14 @@
             </div>
           </article>
 
-          <article class="timeline-item reveal">
-            <div class="timeline-meta">
+          <article class="entry reveal">
+            <div class="entry-meta">
               <p>July 2024</p>
               <span>Remote</span>
             </div>
-            <div class="timeline-body">
-              <h3>Web Development Teaching Assistant</h3>
-              <p class="timeline-org">ScioVirtual</p>
+            <div class="entry-body">
+              <h2>Web Development Teaching Assistant</h2>
+              <p class="entry-subtitle">ScioVirtual</p>
               <p>
                 Supported a web development course in HTML, CSS, and JavaScript
                 across course exercises, mid-course challenges, and final
@@ -148,54 +175,41 @@
             </div>
           </article>
 
-          <article class="timeline-item reveal">
-            <div class="timeline-meta">
+          <article class="entry reveal">
+            <div class="entry-meta">
               <p>June 2023 to December 2023</p>
               <span>Remote / San Francisco</span>
             </div>
-            <div class="timeline-body">
-              <h3>Product and QA Tester</h3>
-              <p class="timeline-org">The Hive Social Network Inc.</p>
+            <div class="entry-body">
+              <h2>Product and QA Tester</h2>
+              <p class="entry-subtitle">The Hive Social Network Inc.</p>
               <p>
                 Reviewed Faves app releases, proposed product improvements, and
                 managed the social media account to more than 144,000 views.
               </p>
             </div>
           </article>
-
-          <article class="timeline-item reveal">
-            <div class="timeline-meta">
-              <p>September 2024 to Present</p>
-              <span>Solon, Ohio</span>
-            </div>
-            <div class="timeline-body">
-              <h3>Tech Lead and Club Officer</h3>
-              <p class="timeline-org">Solon Investment Society</p>
-              <p>
-                Built and maintained the club website while handling the
-                technical side of communication, outreach, and operations.
-              </p>
-            </div>
-          </article>
         </div>
       </section>
 
-      <section class="section section-band" id="projects">
-        <div class="section-heading reveal">
-          <h2>Selected work</h2>
+      <section class="page-section" id="projects">
+        <div class="section-label reveal">
+          <p>Projects</p>
         </div>
-
-        <div class="projects-grid">
-          <article class="project reveal">
-            <div class="project-index">01</div>
-            <div>
-              <h3>AgroEye</h3>
+        <div class="section-body entry-list">
+          <article class="entry reveal">
+            <div class="entry-meta">
+              <p>AgroEye</p>
+              <span>NASA Space Apps</span>
+            </div>
+            <div class="entry-body">
+              <h2>Weather and decision support for farmers</h2>
               <p>
-                A web application built during NASA Space Apps that helps
-                farmers make better decisions using meteorological data and LLM
-                support. I worked on the frontend and product direction.
+                A web application that helps farmers make better decisions using
+                meteorological data and LLM support. I worked on the frontend
+                and product direction.
               </p>
-              <ul>
+              <ul class="entry-tags" aria-label="AgroEye technologies">
                 <li>Express.js</li>
                 <li>Node.js</li>
                 <li>JavaScript</li>
@@ -205,16 +219,19 @@
             </div>
           </article>
 
-          <article class="project reveal">
-            <div class="project-index">02</div>
-            <div>
-              <h3>PocketCast</h3>
+          <article class="entry reveal">
+            <div class="entry-meta">
+              <p>PocketCast</p>
+              <span>Hackathon project</span>
+            </div>
+            <div class="entry-body">
+              <h2>A studio-style podcast generator</h2>
               <p>
-                A hackathon project that generates studio-style podcasts for any
-                subject and length. The emphasis was turning a complex pipeline
-                into something clear and usable.
+                A project that generates podcasts for any subject and length.
+                The main challenge was turning a complicated media pipeline into
+                something clear and usable.
               </p>
-              <ul>
+              <ul class="entry-tags" aria-label="PocketCast technologies">
                 <li>Vue.js</li>
                 <li>JavaScript</li>
                 <li>React.js</li>
@@ -224,16 +241,19 @@
             </div>
           </article>
 
-          <article class="project reveal">
-            <div class="project-index">03</div>
-            <div>
-              <h3>DevChat</h3>
+          <article class="entry reveal">
+            <div class="entry-meta">
+              <p>DevChat</p>
+              <span>Personal tool</span>
+            </div>
+            <div class="entry-body">
+              <h2>Terminal-first LLM tooling</h2>
               <p>
-                A Python CLI for working with large language models in the
-                terminal, with support for markdown and code block rendering in
-                a developer-friendly interface.
+                A Python CLI for working with language models in the terminal,
+                with support for markdown and code block rendering in a more
+                developer-friendly interface.
               </p>
-              <ul>
+              <ul class="entry-tags" aria-label="DevChat technologies">
                 <li>Python</li>
                 <li>Typer</li>
                 <li>Anthropic API</li>
@@ -243,33 +263,13 @@
         </div>
       </section>
 
-      <section class="section section-band" id="blog-preview">
-        <div class="section-heading reveal">
-          <h2>Blog</h2>
-        </div>
-        <article class="article-preview reveal">
-          <p class="article-meta">April 2026 · Featured essay</p>
-          <h3>What small reliability fixes taught me about software</h3>
-          <p>
-            An example post about why operational cleanup work matters, what I
-            learned from reducing real-world data errors, and how that changed
-            the way I think about engineering quality.
-          </p>
-          <div class="article-preview-links">
-            <a class="inline-link" href="blog-reliability-fixes.html">
-              Read featured essay
-            </a>
-            <a class="inline-link" href="blog.html">Browse all articles</a>
-          </div>
-        </article>
-      </section>
     </main>
 
     <footer class="site-footer">
       <p>Deniz Buldum</p>
       <div>
-        <a href="mailto:denizbuldum27@solonschools.net">
-          denizbuldum27@solonschools.net
+        <a href="mailto:deniz@denizbuldum.org">
+          deniz@denizbuldum.org
         </a>
         <a href="https://github.com/dbuldum4" target="_blank" rel="noreferrer">
           GitHub
