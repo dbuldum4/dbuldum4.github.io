@@ -7,8 +7,51 @@
     <title>Deniz Buldum</title>
     <meta
       name="description"
-      content="Personal website for Deniz Buldum: software, product, data, and student-led projects."
+      content="Deniz Buldum, a high school junior in machine learning and computer science."
     />
+    <link rel="canonical" href="https://denizbuldum.org/" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Deniz Buldum" />
+    <meta
+      property="og:description"
+      content="Deniz Buldum, a high school junior in machine learning and computer science."
+    />
+    <meta property="og:url" content="https://denizbuldum.org/" />
+    <meta property="og:site_name" content="Deniz Buldum" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Deniz Buldum" />
+    <meta
+      name="twitter:description"
+      content="Deniz Buldum, a high school junior in machine learning and computer science."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Deniz Buldum",
+        "url": "https://denizbuldum.org/",
+        "email": "mailto:deniz@denizbuldum.org",
+        "description": "Deniz Buldum, a high school junior in machine learning and computer science.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Solon",
+          "addressRegion": "OH",
+          "addressCountry": "US"
+        },
+        "sameAs": [
+          "https://github.com/dbuldum4"
+        ],
+        "knowsAbout": [
+          "Machine learning",
+          "Data science",
+          "Product design",
+          "Math",
+          "Physics",
+          "App development"
+        ]
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -29,17 +72,29 @@
         }
       })();
     </script>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260501" />
   </head>
   <body class="home-page">
     <header class="site-header">
       <div class="site-header-inner">
         <a class="brand" href="#top">Deniz Buldum</a>
-        <nav class="site-nav" aria-label="Primary">
+        <nav class="site-nav" id="primary-menu" aria-label="Primary">
           <a href="#about" data-section-link>About</a>
           <a href="#work" data-section-link>Work</a>
           <a href="#projects" data-section-link>Projects</a>
         </nav>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="primary-menu"
+          data-menu-toggle
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
       </div>
     </header>
 
@@ -51,14 +106,17 @@
         <div class="section-body reveal">
           <h1>Deniz A. Buldum</h1>
           <p class="intro-copy">
-            I work on student-led web products, small developer tools,
-            onboarding flows, and data-heavy systems where the next action
-            needs to be obvious.
+            Hello. I am Deniz Buldum, a junior at Solon High School. I have
+            developed my passion for software from a young age, and I’m
+            interested in pursuing a career as a machine learning research
+            scientist or engineer. I also enjoy playing the piano, competitive
+            programming, and app development. You can contact me at
+            deniz@denizbuldum.org.
           </p>
           <p class="intro-copy">
-            Most of my work sits between engineering and product thinking. I
-            care about whether a tool is understandable, measurable, and useful
-            after the first demo.
+            Most recently, I was a Data Science Intern at Cleveland Clinic
+            through the Center for Youth and College Education. I analyzed data
+            in the Supply Chain and Support Services department.
           </p>
 
           <dl class="intro-details">
@@ -99,7 +157,7 @@
         <div class="section-body entry-list">
           <article class="entry reveal">
             <div class="entry-meta">
-              <p>September 2024 to Present</p>
+              <p>September 2025 to Present</p>
               <span>Solon, Ohio</span>
             </div>
             <div class="entry-body">
@@ -121,9 +179,9 @@
               <h2>Data Science Intern</h2>
               <p class="entry-subtitle">Cleveland Clinic</p>
               <p>
-                Built a Power BI dashboard for loss statistics, worked through
-                data quality issues in WaveMark, and reduced error counts from
-                1,300 to 455 during the internship.
+                Worked with large-scale supply chain data in Power BI, Excel,
+                and WaveMark, and reduced error counts from 1,300 to 455 during
+                the internship.
               </p>
             </div>
           </article>
@@ -137,8 +195,7 @@
               <h2>Python Programming Instructor</h2>
               <p class="entry-subtitle">ScioVirtual</p>
               <p>
-                Led the Python Programming course at ScioCamp 2025 for students
-                studying STEM olympiads and technical problem solving.
+                Led the Python Programming course at ScioCamp 2025.
               </p>
             </div>
           </article>
@@ -152,9 +209,8 @@
               <h2>UX Intern</h2>
               <p class="entry-subtitle">Maximal Learning</p>
               <p>
-                Wrote a PRD, redesigned the onboarding flow, researched
-                competing products, and analyzed user behavior to improve
-                retention.
+                Redesigned the onboarding experience from scratch. Optimized
+                app-wide UX using data points.
               </p>
             </div>
           </article>
@@ -199,15 +255,15 @@
         <div class="section-body entry-list">
           <article class="entry reveal">
             <div class="entry-meta">
-              <p>AgroEye</p>
-              <span>NASA Space Apps</span>
+              <span>NASA Space Apps Challenge project</span>
             </div>
             <div class="entry-body">
-              <h2>Weather and decision support for farmers</h2>
+              <h2>AgroEye</h2>
               <p>
                 A web application that helps farmers make better decisions using
                 meteorological data and LLM support. I worked on the frontend
-                and product direction.
+                and product direction. Won #2 at the NASA Space Apps Challenge
+                at Glenn Research Center.
               </p>
               <ul class="entry-tags" aria-label="AgroEye technologies">
                 <li>Express.js</li>
@@ -221,15 +277,14 @@
 
           <article class="entry reveal">
             <div class="entry-meta">
-              <p>PocketCast</p>
               <span>Hackathon project</span>
             </div>
             <div class="entry-body">
-              <h2>A studio-style podcast generator</h2>
+              <h2>PocketCast</h2>
               <p>
                 A project that generates podcasts for any subject and length.
-                The main challenge was turning a complicated media pipeline into
-                something clear and usable.
+                Built in a team of four for HackCWRU. Helped make a pipeline
+                from app to script to audio file to app.
               </p>
               <ul class="entry-tags" aria-label="PocketCast technologies">
                 <li>Vue.js</li>
@@ -243,11 +298,10 @@
 
           <article class="entry reveal">
             <div class="entry-meta">
-              <p>DevChat</p>
               <span>Personal tool</span>
             </div>
             <div class="entry-body">
-              <h2>Terminal-first LLM tooling</h2>
+              <h2>DevChat</h2>
               <p>
                 A Python CLI for working with language models in the terminal,
                 with support for markdown and code block rendering in a more

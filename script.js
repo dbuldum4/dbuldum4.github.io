@@ -49,6 +49,8 @@ const persistTheme = (theme) => {
 applyTheme(getCurrentTheme());
 
 const headerInner = document.querySelector(".site-header-inner");
+const siteNav = document.querySelector(".site-nav");
+const menuToggle = document.querySelector("[data-menu-toggle]");
 
 if (headerInner) {
   const themeToggle = document.createElement("button");
@@ -82,6 +84,28 @@ if (headerInner) {
 
   headerInner.append(themeToggle);
   updateThemeToggle(getCurrentTheme());
+}
+
+const closeMenu = () => {
+  if (!siteNav || !menuToggle) {
+    return;
+  }
+
+  siteNav.dataset.open = "false";
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-label", "Open navigation menu");
+};
+
+if (siteNav && menuToggle) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = siteNav.dataset.open === "true";
+    siteNav.dataset.open = isOpen ? "false" : "true";
+    menuToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
+    menuToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Open navigation menu" : "Close navigation menu",
+    );
+  });
 }
 
 themeMediaQuery.addEventListener("change", (event) => {
@@ -166,12 +190,19 @@ if (sectionLinks.length > 0) {
       event.preventDefault();
       history.replaceState(null, "", `#${targetId}`);
       setActiveLink(targetId);
+      closeMenu();
       scrollToSection(targetSection);
     });
   });
 
   window.addEventListener("scroll", updateActiveSection, { passive: true });
-  window.addEventListener("resize", updateActiveSection);
+  window.addEventListener("resize", () => {
+    updateActiveSection();
+
+    if (window.matchMedia("(min-width: 431px)").matches) {
+      closeMenu();
+    }
+  });
   window.addEventListener("hashchange", updateActiveSection);
 
   updateActiveSection();
