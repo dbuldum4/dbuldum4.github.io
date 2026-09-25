@@ -469,6 +469,32 @@ h3 {
   margin: 0.55rem 0 0;
 }
 
+.entry-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.1rem;
+  margin-top: 0.8rem;
+}
+
+.entry-links a {
+  color: var(--text);
+  font-size: var(--meta-size);
+  border-bottom: 1px solid var(--detail-link-line);
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.entry-links a:hover {
+  color: var(--accent);
+  border-color: currentColor;
+}
+
+.entry-links a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .entry-tags {
   display: flex;
   flex-wrap: wrap;
