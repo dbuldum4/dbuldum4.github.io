@@ -35,14 +35,14 @@
     root.style.setProperty('--y1', y1 + 'px');
     root.style.setProperty('--nf', (f * s1).toFixed(2) + 'px');
 
-    // Three steps, in scroll order:
+    // Three steps, in scroll order, each starting a little before the last one ends:
     // A: the white floods the screen (the name inverts in place)
     // B: the name shrinks into the top-left
-    // C: the black panel slides in under it while the projects rise on the right
-    A = vh * 1.1;
-    B = vh * 1.0;
-    C = vh * 0.9;
-    D = A + B + C;
+    // C: the black panel slides in under it while the content rises on the right
+    A = vh * 0.75;
+    B = vh * 0.7;
+    C = vh * 0.65;
+    D = A * 0.8 + B * 0.85 + C;
     track.style.height = (vh + D) + 'px';
     readTarget();
     cur = target;
@@ -64,8 +64,8 @@
 
   function render(s) {
     var pf = clamp01(s / A);
-    var pn = clamp01((s - A) / B);
-    var pc = clamp01((s - A - B) / C);
+    var pn = clamp01((s - A * 0.8) / B);
+    var pc = clamp01((s - A * 0.8 - B * 0.85) / C);
     var en = ease(pn);
     flood.style.transform = 'translate3d(0,0,0) scaleY(' + (0.1 + 0.9 * ease(pf)).toFixed(5) + ')';
     name.style.transform = 'translate3d(0,' + (y0 + (y1 - y0) * en).toFixed(2) + 'px,0) scale(' + (1 + (s1 - 1) * en).toFixed(5) + ')';
@@ -108,7 +108,7 @@
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add('on'); io.unobserve(en.target); }
       });
-    }, { rootMargin: '0px 0px -8% 0px' });
+    }, { rootMargin: '0px 0px -2% 0px' });
     items.forEach(function (el) { io.observe(el); });
   } else {
     items.forEach(function (el) { el.classList.add('on'); });
