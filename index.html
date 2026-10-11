@@ -59,12 +59,13 @@
       href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&amp;family=Geist+Mono:wght@400;500&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20261010c" />
+    <link rel="stylesheet" href="styles.css?v=20261010d" />
   </head>
   <body>
     <div class="track" id="track">
       <header class="stage">
         <div class="flood" id="flood" aria-hidden="true"></div>
+        <div class="panel" id="panel" aria-hidden="true"></div>
         <h1 class="name" id="name">Deniz Buldum</h1>
         <div class="cue" id="cue" aria-hidden="true">
           <span>Machine learning · Computer science</span>
@@ -73,43 +74,34 @@
       </header>
     </div>
 
-    <main class="record" id="record">
-      <section class="panel" id="about">
-        <p class="tag rv">Solon, Ohio · Class of 2027</p>
-        <p class="statement rv">Building toward machine learning research.</p>
-      </section>
-
-      <section class="panel" id="work">
-        <h2 class="tag rv">Work</h2>
-        <ul class="roster">
-          <li class="rv">AI Intern <span>Cleveland Clinic</span></li>
-          <li class="rv">Data Science Intern <span>Cleveland Clinic</span></li>
-          <li class="rv">Tech Lead <span>Solon Investment Society</span></li>
-          <li class="rv">UX Intern <span>Maximal Learning</span></li>
-        </ul>
-      </section>
-
-      <section class="panel" id="projects">
-        <h2 class="tag rv">Projects</h2>
-        <ul class="products">
-          <li class="product rv"><a href="https://denizbuldum.org/lab/" target="_blank" rel="noreferrer">Lab</a><small>Local-first notes · TypeScript</small></li>
-          <li class="product rv"><a href="https://denizbuldum.org/shift/" target="_blank" rel="noreferrer">Shift</a><small>File conversion for macOS · Rust</small></li>
-          <li class="product rv"><strong>AgroEye</strong><small>NASA Space Apps · 2nd place</small></li>
-        </ul>
-      </section>
-    </main>
-
-    <footer class="foot">
-      <div class="panel">
-        <p class="tag rv">Contact</p>
-        <a class="email rv" href="mailto:deniz@denizbuldum.org">deniz@denizbuldum.org</a>
-        <div class="colophon">
-          <span>Deniz Buldum</span>
-          <a href="https://github.com/dbuldum4" target="_blank" rel="noreferrer">GitHub ↗</a>
+    <div class="split" id="split">
+      <aside class="aside">
+        <div>
+          <p class="aside-name" aria-hidden="true">Deniz Buldum</p>
+          <p class="bio aside-fade">I build software and study machine learning.</p>
         </div>
-      </div>
-    </footer>
+        <dl class="facts aside-fade">
+          <div><dt>Now</dt><dd>AI Intern, Cleveland Clinic</dd></div>
+          <div><dt>Base</dt><dd>Solon, Ohio</dd></div>
+          <div><dt>Contact</dt><dd><a href="mailto:deniz@denizbuldum.org">Email</a><a href="https://github.com/dbuldum4" target="_blank" rel="noreferrer">GitHub</a></dd></div>
+        </dl>
+      </aside>
 
-    <script src="script.js?v=20261010c"></script>
+      <main class="work">
+        <h2 class="label rv">Projects</h2>
+        <a class="feature rv" href="https://denizbuldum.org/lab/" target="_blank" rel="noreferrer">
+          <span class="feature-name">Lab</span>
+          <span class="feature-desc">Local-first notes. No accounts, no backend.</span>
+        </a>
+        <div class="grid">
+          <a class="item rv" href="https://denizbuldum.org/shift/" target="_blank" rel="noreferrer"><span class="item-name">Shift</span><span class="item-desc">File conversion for macOS</span></a>
+          <div class="item rv"><span class="item-name">AgroEye</span><span class="item-desc">2nd place, NASA Space Apps</span></div>
+          <div class="item rv"><span class="item-name">PocketCast</span><span class="item-desc">Podcasts on any topic</span></div>
+          <div class="item rv"><span class="item-name">DevChat</span><span class="item-desc">LLMs in the terminal</span></div>
+        </div>
+      </main>
+    </div>
+
+    <script src="script.js?v=20261010d"></script>
   </body>
 </html>
