@@ -80,19 +80,4 @@
   } else {
     items.forEach(function (el) { el.classList.add('on'); });
   }
-
-  var copy = document.getElementById('copy');
-  var email = document.getElementById('email');
-  copy.addEventListener('click', function () {
-    var addr = 'deniz@denizbuldum.org';
-    function selectIt() {
-      var r = document.createRange(); r.selectNodeContents(email);
-      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-      copy.textContent = 'Selected — press ⌘C';
-    }
-    try {
-      navigator.clipboard.writeText(addr).then(function () { copy.textContent = 'Copied'; }, selectIt);
-    } catch (err) { selectIt(); }
-    setTimeout(function () { copy.textContent = 'Copy address'; }, 2200);
-  });
 })();
