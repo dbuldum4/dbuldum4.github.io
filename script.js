@@ -8,9 +8,9 @@
   var name = document.getElementById('name');
   var cue = document.getElementById('cue');
   var wideQuery = window.matchMedia('(min-width: 860px)');
+  var work = document.getElementById('work');
   var vh = 0, H = 0, y0 = 0, y1 = 0, s1 = 1, A = 1, B = 1, C = 1, D = 1;
-  var cur = 0, target = 0, running = false, lastW = 0, docked = false;
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lastW = 0, docked = false, queued = false;
 
   function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function clamp01(v) { return Math.min(1, Math.max(0, v)); }
@@ -35,25 +35,21 @@
     root.style.setProperty('--y1', y1 + 'px');
     root.style.setProperty('--nf', (f * s1).toFixed(2) + 'px');
 
-    // Three steps, in scroll order, each starting a little before the last one ends:
+    // Three equal beats, one after another, each 0.6 of a screen of scrolling:
     // A: the white floods the screen (the name inverts in place)
     // B: the name shrinks into the top-left
-    // C: the black panel slides in under it while the content rises on the right
-    A = vh * 0.75;
-    B = vh * 0.7;
-    C = vh * 0.65;
-    D = A * 0.8 + B * 0.85 + C;
+    // C: the black panel slides in, and the panel text and the right-hand column fade in together
+    A = vh * 0.6;
+    B = vh * 0.6;
+    C = vh * 0.6;
+    D = A + B + C;
     track.style.height = (vh + D) + 'px';
-    readTarget();
-    cur = target;
-    render(cur);
+    render(progress());
   }
 
-  function readTarget() {
-    var raw = window.scrollY - track.offsetTop;
-    target = Math.min(D, Math.max(0, raw));
-    // Past the hero, snap to the final frame so the hand-off to the split is exact.
-    if (raw >= D) { cur = D; }
+  // Scroll distance into the hero, capped at its end.
+  function progress() {
+    return Math.min(D, Math.max(0, window.scrollY - track.offsetTop));
   }
 
   function setDocked(on) {
@@ -64,8 +60,8 @@
 
   function render(s) {
     var pf = clamp01(s / A);
-    var pn = clamp01((s - A * 0.8) / B);
-    var pc = clamp01((s - A * 0.8 - B * 0.85) / C);
+    var pn = clamp01((s - A) / B);
+    var pc = clamp01((s - A - B) / C);
     var en = ease(pn);
     flood.style.transform = 'translate3d(0,0,0) scaleY(' + (0.1 + 0.9 * ease(pf)).toFixed(5) + ')';
     name.style.transform = 'translate3d(0,' + (y0 + (y1 - y0) * en).toFixed(2) + 'px,0) scale(' + (1 + (s1 - 1) * en).toFixed(5) + ')';
@@ -77,23 +73,19 @@
     panelContent.style.clipPath = 'inset(0 ' + ((1 - ep) * 100).toFixed(3) + '% 0 0)';
     panelContent.style.opacity = po.toFixed(3);
     panelContent.style.transform = 'translate3d(0,' + ((1 - po) * 16).toFixed(2) + 'px,0)';
+    // The right-hand column scrolls up underneath during the hero but stays hidden until the
+    // panel is moving, then fades in on the same beat as the panel text.
+    work.style.opacity = po.toFixed(3);
     cue.style.opacity = Math.max(0, 1 - pf * 3).toFixed(3);
     setDocked(s >= D - 0.5);
   }
 
-  // Ease the animation toward the scroll position each frame, so uneven scroll events read as one smooth motion.
-  function tick() {
-    var d = target - cur;
-    if (reduce || Math.abs(d) < 0.5) { cur = target; running = false; render(cur); return; }
-    cur += d * 0.09;
-    render(cur);
-    requestAnimationFrame(tick);
-  }
-
+  // Everything is tied directly to the scroll position (one update per frame), so the hero and
+  // the page beneath it always move together.
   window.addEventListener('scroll', function () {
-    readTarget();
-    if (cur === D) render(cur);
-    if (!running) { running = true; requestAnimationFrame(tick); }
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function () { queued = false; render(progress()); });
   }, { passive: true });
   // Only re-measure when the width changes; mobile toolbars change the height mid-scroll and caused jumps.
   window.addEventListener('resize', function () {
