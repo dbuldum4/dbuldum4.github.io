@@ -59,7 +59,7 @@
       href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&amp;family=Geist+Mono:wght@400;500&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20261010b" />
+    <link rel="stylesheet" href="styles.css?v=20261010c" />
   </head>
   <body>
     <div class="track" id="track">
@@ -74,64 +74,42 @@
     </div>
 
     <main class="record" id="record">
-      <section id="about">
-        <p class="lede rv">Senior at Solon High School, working toward a career in machine learning research. Most recently an AI Intern at Cleveland Clinic.</p>
+      <section class="panel" id="about">
+        <p class="tag rv">Solon, Ohio · Class of 2027</p>
+        <p class="statement rv">Building toward machine learning research.</p>
       </section>
 
-      <section id="work" class="row">
-        <h2 class="label rv">Work</h2>
-        <div class="body">
-          <ol class="lines" reversed>
-            <li class="line rv"><span class="line-title">AI Intern</span><span class="line-org">Cleveland Clinic</span><span class="line-date">2026</span></li>
-            <li class="line rv"><span class="line-title">Tech Lead and Club Officer</span><span class="line-org">Solon Investment Society</span><span class="line-date">2025</span></li>
-            <li class="line rv"><span class="line-title">Data Science Intern</span><span class="line-org">Cleveland Clinic</span><span class="line-date">2025</span></li>
-            <li class="line rv"><span class="line-title">Python Programming Instructor</span><span class="line-org">ScioVirtual</span><span class="line-date">2025</span></li>
-            <li class="line rv"><span class="line-title">UX Intern</span><span class="line-org">Maximal Learning</span><span class="line-date">2024</span></li>
-            <li class="line rv"><span class="line-title">Web Development Teaching Assistant</span><span class="line-org">ScioVirtual</span><span class="line-date">2024</span></li>
-            <li class="line rv"><span class="line-title">Product and QA Tester</span><span class="line-org">The Hive Social Network</span><span class="line-date">2023</span></li>
-          </ol>
-        </div>
+      <section class="panel" id="work">
+        <h2 class="tag rv">Work</h2>
+        <ul class="roster">
+          <li class="rv">AI Intern <span>Cleveland Clinic</span></li>
+          <li class="rv">Data Science Intern <span>Cleveland Clinic</span></li>
+          <li class="rv">Tech Lead <span>Solon Investment Society</span></li>
+          <li class="rv">UX Intern <span>Maximal Learning</span></li>
+        </ul>
       </section>
 
-      <section id="projects" class="row">
-        <h2 class="label rv">Projects</h2>
-        <div class="body">
-          <article class="proj rv">
-            <h3 class="proj-name">Lab</h3>
-            <p class="proj-desc">A local-first Markdown notepad with no accounts or backend.</p>
-            <div class="proj-links"><a href="https://denizbuldum.org/lab/" target="_blank" rel="noreferrer">Open ↗</a><a href="https://github.com/dbuldum4/lab" target="_blank" rel="noreferrer">Source ↗</a></div>
-          </article>
-          <article class="proj rv">
-            <h3 class="proj-name">Shift</h3>
-            <p class="proj-desc">A native macOS app and CLI for converting files between formats.</p>
-            <div class="proj-links"><a href="https://denizbuldum.org/shift/" target="_blank" rel="noreferrer">Open ↗</a><a href="https://github.com/dbuldum4/shift" target="_blank" rel="noreferrer">Source ↗</a></div>
-          </article>
-          <article class="proj rv">
-            <h3 class="proj-name">AgroEye</h3>
-            <p class="proj-desc">Weather data and LLMs for farm decisions. #2 at NASA Space Apps, Glenn Research Center.</p>
-          </article>
-          <article class="proj rv">
-            <h3 class="proj-name">PocketCast</h3>
-            <p class="proj-desc">Generates podcasts on any subject, at any length. Built at HackCWRU.</p>
-          </article>
-          <article class="proj rv">
-            <h3 class="proj-name">DevChat</h3>
-            <p class="proj-desc">A terminal CLI for working with language models.</p>
-          </article>
-        </div>
+      <section class="panel" id="projects">
+        <h2 class="tag rv">Projects</h2>
+        <ul class="products">
+          <li class="product rv"><a href="https://denizbuldum.org/lab/" target="_blank" rel="noreferrer">Lab</a><small>Local-first notes · TypeScript</small></li>
+          <li class="product rv"><a href="https://denizbuldum.org/shift/" target="_blank" rel="noreferrer">Shift</a><small>File conversion for macOS · Rust</small></li>
+          <li class="product rv"><strong>AgroEye</strong><small>NASA Space Apps · 2nd place</small></li>
+        </ul>
       </section>
     </main>
 
     <footer class="foot">
-      <div class="foot-inner">
+      <div class="panel">
+        <p class="tag rv">Contact</p>
         <a class="email rv" href="mailto:deniz@denizbuldum.org">deniz@denizbuldum.org</a>
         <div class="colophon">
-          <span>Solon, Ohio</span>
+          <span>Deniz Buldum</span>
           <a href="https://github.com/dbuldum4" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
       </div>
     </footer>
 
-    <script src="script.js?v=20261010b"></script>
+    <script src="script.js?v=20261010c"></script>
   </body>
 </html>
