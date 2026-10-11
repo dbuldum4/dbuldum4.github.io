@@ -66,8 +66,14 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .aside-fade { opacity: 0; transform: translateY(16px); transition: opacity 1.2s ease, transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .docked .aside-fade { opacity: 1; transform: none; }
 
-.work { flex: 1 1 0; min-width: 0; min-height: var(--vh, 100svh); box-sizing: border-box; background: var(--paper); padding: var(--y1) var(--gutter) 120px; display: flex; flex-direction: column; gap: 72px; }
+.work { flex: 1 1 0; min-width: 0; min-height: var(--vh, 100svh); box-sizing: border-box; background: var(--paper); padding: var(--y1) var(--gutter) 120px; display: flex; flex-direction: column; gap: 120px; }
+.block { display: flex; flex-direction: column; gap: 48px; }
 .label { margin: 0; font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.roles { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.role { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+.role-title { font-size: 24px; letter-spacing: -0.02em; }
+.role-org { font-size: 18px; color: var(--muted); }
+.role-year { margin-left: auto; font-family: var(--mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .feature { align-self: flex-start; display: flex; flex-direction: column; gap: 14px; }
 .feature-name { font-size: clamp(64px, 8vw, 120px); line-height: 0.9; letter-spacing: -0.045em; transition: color 0.3s ease; }
 .feature-desc { font-size: 18px; color: var(--muted); }
