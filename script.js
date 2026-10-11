@@ -4,6 +4,7 @@
   var track = document.getElementById('track');
   var flood = document.getElementById('flood');
   var panel = document.getElementById('panel');
+  var panelContent = document.getElementById('panelContent');
   var name = document.getElementById('name');
   var cue = document.getElementById('cue');
   var wideQuery = window.matchMedia('(min-width: 860px)');
@@ -68,7 +69,14 @@
     var en = ease(pn);
     flood.style.transform = 'translate3d(0,0,0) scaleY(' + (0.1 + 0.9 * ease(pf)).toFixed(5) + ')';
     name.style.transform = 'translate3d(0,' + (y0 + (y1 - y0) * en).toFixed(2) + 'px,0) scale(' + (1 + (s1 - 1) * en).toFixed(5) + ')';
-    panel.style.transform = 'translate3d(0,0,0) scaleX(' + ease(pc).toFixed(5) + ')';
+    var ep = ease(pc);
+    panel.style.transform = 'translate3d(0,0,0) scaleX(' + ep.toFixed(5) + ')';
+    // The panel's text is revealed by the panel's edge and fades up while it slides,
+    // so it is fully in place by the time the panel stops.
+    var po = clamp01((pc - 0.3) / 0.6);
+    panelContent.style.clipPath = 'inset(0 ' + ((1 - ep) * 100).toFixed(3) + '% 0 0)';
+    panelContent.style.opacity = po.toFixed(3);
+    panelContent.style.transform = 'translate3d(0,' + ((1 - po) * 16).toFixed(2) + 'px,0)';
     cue.style.opacity = Math.max(0, 1 - pf * 3).toFixed(3);
     setDocked(s >= D - 0.5);
   }

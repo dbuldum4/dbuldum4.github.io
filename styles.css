@@ -63,8 +63,14 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .facts dd { margin: 0; font-size: 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
 .facts a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 .facts a:hover { color: var(--muted-on-ink); }
-.aside-fade { opacity: 0; transform: translateY(16px); transition: opacity 1.2s ease, transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.docked .aside-fade { opacity: 1; transform: none; }
+/* A copy of the panel's text that rides in with the sliding panel, so it is already in place when the real panel takes over */
+.panel-content {
+  position: absolute; top: 0; bottom: 0; left: 0; width: var(--aside-w); box-sizing: border-box;
+  padding: var(--y1) var(--gutter) 40px; color: var(--paper);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 48px;
+  opacity: 0; pointer-events: none; will-change: opacity, transform, clip-path;
+}
+.panel-content .aside-name { visibility: hidden; }
 
 .work { flex: 1 1 0; min-width: 0; min-height: var(--vh, 100svh); box-sizing: border-box; background: var(--paper); padding: var(--y1) var(--gutter) 120px; display: flex; flex-direction: column; gap: 120px; }
 .block { display: flex; flex-direction: column; gap: 48px; }
@@ -87,6 +93,7 @@ a.feature:hover .feature-name, a.item:hover .item-name { color: var(--muted); }
 @media (max-width: 859px) {
   .split { flex-direction: column; align-items: stretch; }
   .aside { position: relative; top: auto; height: auto; width: 100%; flex: none; padding-bottom: 48px; }
+  .panel-content { bottom: auto; justify-content: flex-start; }
   .work { flex: none; width: 100%; min-height: 0; }
   .grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
 }
@@ -95,5 +102,5 @@ a.feature:hover .feature-name, a.item:hover .item-name { color: var(--muted); }
 .js .rv { opacity: 0; transform: translateY(36px); transition: opacity 1.4s ease, transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .js .rv.on { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
-  .js .rv, .aside-fade { opacity: 1; transform: none; transition: none; }
+  .js .rv { opacity: 1; transform: none; transition: none; }
 }
