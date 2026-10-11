@@ -1,209 +1,98 @@
-const themeStorageKey = "deniz-theme";
-const themeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  var track = document.getElementById('track');
+  var flood = document.getElementById('flood');
+  var name = document.getElementById('name');
+  var cue = document.getElementById('cue');
+  var record = document.getElementById('record');
+  var vh = 0, H = 0, y0 = 0, y1 = 0, s1 = 1, D = 1, A = 1, B = 1;
+  var cur = 0, target = 0, running = false, lastW = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const getStoredTheme = () => {
-  try {
-    const storedTheme = window.localStorage.getItem(themeStorageKey);
-    return storedTheme === "light" || storedTheme === "dark"
-      ? storedTheme
-      : null;
-  } catch {
-    return null;
+  function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+  function measure() {
+    lastW = window.innerWidth;
+    vh = window.innerHeight;
+    root.style.setProperty('--vh', vh + 'px');
+    var f = parseFloat(getComputedStyle(name).fontSize) || 120;
+    H = name.offsetHeight;
+    s1 = Math.min(1, Math.max(0.55, 72 / f));
+    y0 = vh * 0.45 - H / 2;
+    y1 = Math.max(20, vh * 0.05);
+    // Three steps, in scroll order:
+    // A: the white floods the screen (the name inverts in place)
+    // B: the name shrinks and rises to the top
+    // C: the content scrolls up beneath it
+    var h0 = y1 + H * s1 + Math.max(40, vh * 0.07);
+    A = vh * 1.1;
+    B = vh * 1.0;
+    D = A + B + (vh - h0);
+    track.style.height = (vh + D) + 'px';
+    record.style.marginTop = (-(vh - h0)) + 'px';
+    readTarget();
+    cur = target;
+    render(cur);
   }
-};
 
-const getCurrentTheme = () => {
-  return (
-    getStoredTheme() ||
-    (themeMediaQuery.matches ? "dark" : "light")
-  );
-};
-
-const updateThemeToggle = (theme) => {
-  const toggle = document.querySelector("[data-theme-toggle]");
-
-  if (!toggle) {
-    return;
+  function readTarget() {
+    target = Math.min(D, Math.max(0, window.scrollY - track.offsetTop));
   }
 
-  const nextTheme = theme === "dark" ? "light" : "dark";
-  toggle.setAttribute("aria-label", `Switch to ${nextTheme} mode`);
-  toggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
-  toggle.title = `Switch to ${nextTheme} mode`;
-};
-
-const applyTheme = (theme) => {
-  document.documentElement.dataset.theme = theme;
-  document.documentElement.style.colorScheme = theme;
-  updateThemeToggle(theme);
-};
-
-const persistTheme = (theme) => {
-  try {
-    window.localStorage.setItem(themeStorageKey, theme);
-  } catch {
-    return;
+  function render(s) {
+    var pf = Math.min(1, s / A);
+    var pn = Math.min(1, Math.max(0, (s - A) / B));
+    var ef = ease(pf), en = ease(pn);
+    flood.style.transform = 'translate3d(0,0,0) scaleY(' + (0.1 + 0.9 * ef).toFixed(5) + ')';
+    name.style.transform = 'translate3d(0,' + (y0 + (y1 - y0) * en).toFixed(2) + 'px,0) scale(' + (1 + (s1 - 1) * en).toFixed(5) + ')';
+    cue.style.opacity = Math.max(0, 1 - pf * 3).toFixed(3);
   }
-};
 
-applyTheme(getCurrentTheme());
+  // Ease the animation toward the scroll position each frame, so uneven scroll events read as one smooth motion.
+  function tick() {
+    var d = target - cur;
+    if (reduce || Math.abs(d) < 0.5) { cur = target; running = false; render(cur); return; }
+    cur += d * 0.09;
+    render(cur);
+    requestAnimationFrame(tick);
+  }
 
-const headerInner = document.querySelector(".site-header-inner");
-const siteNav = document.querySelector(".site-nav");
-const menuToggle = document.querySelector("[data-menu-toggle]");
-
-if (headerInner) {
-  const themeToggle = document.createElement("button");
-  themeToggle.className = "theme-toggle";
-  themeToggle.type = "button";
-  themeToggle.dataset.themeToggle = "";
-  themeToggle.innerHTML = `
-    <svg class="theme-icon-dark" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 3a6 6 0 0 0 9 7.5 9 9 0 1 1-9-7.5Z"></path>
-    </svg>
-    <svg class="theme-icon-light" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="4"></circle>
-      <path d="M12 2v2"></path>
-      <path d="M12 20v2"></path>
-      <path d="m4.93 4.93 1.41 1.41"></path>
-      <path d="m17.66 17.66 1.41 1.41"></path>
-      <path d="M2 12h2"></path>
-      <path d="M20 12h2"></path>
-      <path d="m6.34 17.66-1.41 1.41"></path>
-      <path d="m19.07 4.93-1.41 1.41"></path>
-    </svg>
-  `;
-
-  themeToggle.addEventListener("click", () => {
-    const nextTheme =
-      document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-
-    persistTheme(nextTheme);
-    applyTheme(nextTheme);
+  window.addEventListener('scroll', function () {
+    readTarget();
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  }, { passive: true });
+  // Only re-measure when the width changes; mobile toolbars change the height mid-scroll and caused jumps.
+  window.addEventListener('resize', function () {
+    if (window.innerWidth !== lastW) measure();
   });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  measure();
 
-  headerInner.append(themeToggle);
-  updateThemeToggle(getCurrentTheme());
-}
-
-const closeMenu = () => {
-  if (!siteNav || !menuToggle) {
-    return;
+  var items = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('on'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('on'); });
   }
 
-  siteNav.dataset.open = "false";
-  menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.setAttribute("aria-label", "Open navigation menu");
-};
-
-if (siteNav && menuToggle) {
-  menuToggle.addEventListener("click", () => {
-    const isOpen = siteNav.dataset.open === "true";
-    siteNav.dataset.open = isOpen ? "false" : "true";
-    menuToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
-    menuToggle.setAttribute(
-      "aria-label",
-      isOpen ? "Open navigation menu" : "Close navigation menu",
-    );
-  });
-}
-
-themeMediaQuery.addEventListener("change", (event) => {
-  if (!getStoredTheme()) {
-    applyTheme(event.matches ? "dark" : "light");
-  }
-});
-
-const prefersReducedMotion = window.matchMedia(
-  "(prefers-reduced-motion: reduce)"
-).matches;
-
-const revealItems = document.querySelectorAll(".reveal");
-
-if (revealItems.length > 0 && !prefersReducedMotion) {
-  revealItems.forEach((item, index) => {
-    item.style.setProperty("--reveal-delay", `${Math.min(index * 45, 420)}ms`);
-  });
-
-  window.requestAnimationFrame(() => {
-    document.documentElement.classList.add("has-motion");
-  });
-}
-
-const sectionLinks = document.querySelectorAll("[data-section-link]");
-
-if (sectionLinks.length > 0) {
-  const sections = Array.from(sectionLinks)
-    .map((link) => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
-
-  const getScrollOffset = () => {
-    const header = document.querySelector(".site-header");
-    return (header?.offsetHeight || 0) + 18;
-  };
-
-  const setActiveLink = (id) => {
-    sectionLinks.forEach((link) => {
-      const target = link.getAttribute("href");
-      link.dataset.active = target === `#${id}` ? "true" : "false";
-    });
-  };
-
-  const scrollToSection = (section) => {
-    const top =
-      window.scrollY + section.getBoundingClientRect().top - getScrollOffset();
-
-    window.scrollTo({
-      top,
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-    });
-  };
-
-  const updateActiveSection = () => {
-    if (sections.length === 0) {
-      return;
+  var copy = document.getElementById('copy');
+  var email = document.getElementById('email');
+  copy.addEventListener('click', function () {
+    var addr = 'deniz@denizbuldum.org';
+    function selectIt() {
+      var r = document.createRange(); r.selectNodeContents(email);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copy.textContent = 'Selected — press ⌘C';
     }
-
-    const scrollMarker = window.scrollY + getScrollOffset() + 24;
-    let activeSection = sections[0];
-
-    sections.forEach((section) => {
-      if (section.offsetTop <= scrollMarker) {
-        activeSection = section;
-      }
-    });
-
-    setActiveLink(activeSection.id);
-  };
-
-  sectionLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      const targetId = link.getAttribute("href")?.slice(1);
-      const targetSection = targetId
-        ? document.getElementById(targetId)
-        : null;
-
-      if (!targetId || !targetSection) {
-        return;
-      }
-
-      event.preventDefault();
-      history.replaceState(null, "", `#${targetId}`);
-      setActiveLink(targetId);
-      closeMenu();
-      scrollToSection(targetSection);
-    });
+    try {
+      navigator.clipboard.writeText(addr).then(function () { copy.textContent = 'Copied'; }, selectIt);
+    } catch (err) { selectIt(); }
+    setTimeout(function () { copy.textContent = 'Copy address'; }, 2200);
   });
-
-  window.addEventListener("scroll", updateActiveSection, { passive: true });
-  window.addEventListener("resize", () => {
-    updateActiveSection();
-
-    if (window.matchMedia("(min-width: 431px)").matches) {
-      closeMenu();
-    }
-  });
-  window.addEventListener("hashchange", updateActiveSection);
-
-  updateActiveSection();
-}
+})();
