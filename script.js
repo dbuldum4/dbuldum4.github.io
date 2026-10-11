@@ -9,8 +9,17 @@
   var cue = document.getElementById('cue');
   var wideQuery = window.matchMedia('(min-width: 860px)');
   var work = document.getElementById('work');
+  var split = document.getElementById('split');
+  var aside = split.querySelector('.aside');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var vh = 0, H = 0, y0 = 0, y1 = 0, s1 = 1, A = 1, B = 1, C = 1, D = 1;
-  var lastW = 0, docked = false, queued = false;
+  var lastW = 0, docked = false, trackH = 0, splitH = 0;
+
+  // One spring for the whole page. x is the sprung scroll position: it chases the real scroll
+  // position, and both the opening animation and the page layout are drawn at x.
+  // Stiffness 140, damping ratio 0.85: settles in about half a second with a barely visible overshoot.
+  var STIFFNESS = 140, DAMPING = 2 * Math.sqrt(STIFFNESS) * 0.85;
+  var x = 0, velocity = 0, rafId = 0, lastTime = 0;
 
   function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function clamp01(v) { return Math.min(1, Math.max(0, v)); }
@@ -43,13 +52,61 @@
     B = vh * 0.6;
     C = vh * 0.6;
     D = A + B + C;
-    track.style.height = (vh + D) + 'px';
-    render(progress());
+    trackH = vh + D;
+    track.style.height = trackH + 'px';
+    splitH = split.offsetHeight;
+    x = window.scrollY;
+    velocity = 0;
+    apply();
   }
 
-  // Scroll distance into the hero, capped at its end.
-  function progress() {
-    return Math.min(D, Math.max(0, window.scrollY - track.offsetTop));
+  // Where a sticky element sits in the viewport, given its container's top (in the viewport) and height.
+  function stickyTop(top, height) { return Math.min(Math.max(0, top), top + height - vh); }
+
+  function shift(el, px) {
+    el.style.transform = Math.abs(px) < 0.05 ? '' : 'translate3d(0,' + px.toFixed(2) + 'px,0)';
+  }
+
+  // Draw the page as if it were scrolled to x instead of the real scroll position.
+  function apply() {
+    var raw = window.scrollY;
+    var T = track.offsetTop;
+    // The pinned opening screen: put it where it would be pinned at x.
+    shift(track, stickyTop(T - x, trackH) - stickyTop(T - raw, trackH));
+    // The rest of the page simply trails by the spring's lag.
+    var lag = raw - x;
+    shift(split, lag);
+    // The sticky side panel inside it: undo the lag while it is pinned, so it stays put.
+    if (wideQuery.matches) {
+      var st = split.offsetTop;
+      shift(aside, stickyTop(st - x, splitH) - stickyTop(st - raw, splitH) - lag);
+    } else {
+      shift(aside, 0);
+    }
+    render(Math.min(D, Math.max(0, x - T)));
+  }
+
+  function step(now) {
+    var dt = Math.min(0.034, Math.max(0.001, (now - lastTime) / 1000));
+    lastTime = now;
+    var target = window.scrollY;
+    if (reduce) {
+      x = target; velocity = 0;
+    } else {
+      var accel = STIFFNESS * (target - x) - DAMPING * velocity;
+      velocity += accel * dt;
+      x += velocity * dt;
+    }
+    var settled = Math.abs(target - x) < 0.25 && Math.abs(velocity) < 4;
+    if (settled) { x = target; velocity = 0; }
+    apply();
+    rafId = settled ? 0 : requestAnimationFrame(step);
+  }
+
+  function kick() {
+    if (rafId) return;
+    lastTime = performance.now();
+    rafId = requestAnimationFrame(step);
   }
 
   function setDocked(on) {
@@ -80,13 +137,7 @@
     setDocked(s >= D - 0.5);
   }
 
-  // Everything is tied directly to the scroll position (one update per frame), so the hero and
-  // the page beneath it always move together.
-  window.addEventListener('scroll', function () {
-    if (queued) return;
-    queued = true;
-    requestAnimationFrame(function () { queued = false; render(progress()); });
-  }, { passive: true });
+  window.addEventListener('scroll', kick, { passive: true });
   // Only re-measure when the width changes; mobile toolbars change the height mid-scroll and caused jumps.
   window.addEventListener('resize', function () {
     if (window.innerWidth !== lastW) measure();
