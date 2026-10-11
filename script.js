@@ -44,14 +44,15 @@
     root.style.setProperty('--y1', y1 + 'px');
     root.style.setProperty('--nf', (f * s1).toFixed(2) + 'px');
 
-    // Three equal beats, one after another, each 0.6 of a screen of scrolling:
+    // Three beats, each 0.6 of a screen of scrolling:
     // A: the white floods the screen (the name inverts in place)
     // B: the name shrinks into the top-left
-    // C: the black panel slides in, and the panel text and the right-hand column fade in together
+    // C: the black panel slides in, and the panel text and the right-hand column fade in together.
+    //    C starts halfway through B, so content is already arriving as the name lands.
     A = vh * 0.6;
     B = vh * 0.6;
     C = vh * 0.6;
-    D = A + B + C;
+    D = A + B * 0.5 + C;
     trackH = vh + D;
     track.style.height = trackH + 'px';
     splitH = split.offsetHeight;
@@ -118,7 +119,7 @@
   function render(s) {
     var pf = clamp01(s / A);
     var pn = clamp01((s - A) / B);
-    var pc = clamp01((s - A - B) / C);
+    var pc = clamp01((s - A - B * 0.5) / C);
     var en = ease(pn);
     flood.style.transform = 'translate3d(0,0,0) scaleY(' + (0.1 + 0.9 * ease(pf)).toFixed(5) + ')';
     name.style.transform = 'translate3d(0,' + (y0 + (y1 - y0) * en).toFixed(2) + 'px,0) scale(' + (1 + (s1 - 1) * en).toFixed(5) + ')';
